@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="Diretorio"/>
+   <type name="Dono"/>
+   <type name="Int"/>
+   <type name="Leitura"/>
+   <type name="LeituraEscrita"/>
+   <type name="ParaTodos"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="UsuarioExterno"/>
+   <type name="UsuarioLocal"/>
+   <type name="seq/Int"/>
+</node>
+
+<node hideunconnected="no" numberatoms="no" color="Blue">
+   <type name="Entidade"/>
+</node>
+
+<node numberatoms="no" color="Green">
+   <type name="CategoriaUsuario"/>
+</node>
+
+<node numberatoms="no" shape="Circle" color="Red">
+   <type name="Permissao"/>
+</node>
+
+<node style="Solid" shape="Ellipse">
+   <type name="Arquivo"/>
+</node>
+
+<edge layout="no">
+   <relation name="conteudo"> <type name="Diretorio"/> <type name="Entidade"/> </relation>
+</edge>
+
+<edge style="Dashed">
+   <relation name="permissao"> <type name="CategoriaUsuario"/> <type name="Permissao"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
