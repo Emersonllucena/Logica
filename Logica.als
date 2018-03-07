@@ -14,6 +14,10 @@ sig Diretorio extends Entidade {
 
 sig Arquivo extends Entidade {}
 
+fun pai [ent:Entidade]: Diretorio {
+	ent.~conteudo
+}
+
 pred root [dir:Diretorio] {
 	no dir.~conteudo
 }
@@ -27,10 +31,10 @@ fact estruturaDeArvore {
 	no dir: Diretorio | dir in dir.^conteudo
 
 	-- todo arquivo possui um ancestral imediato
-	all arq: Arquivo | one arq.~conteudo
+	all arq: Arquivo | one pai[arq]
 
 	-- todo diretório possui um ou nenhum ancestral imediato
-	all dir: Diretorio | lone dir.~conteudo
+	all dir: Diretorio | lone pai[dir]
 
 	-- apenas um diretorio nao possui ancestral imediato (root)
 	one dir: Diretorio | root[dir]
@@ -49,5 +53,21 @@ abstract sig Permissao {}
 	-- Funciona como um enum
 one sig Leitura, LeituraEscrita, Dono extends Permissao {}
 
+/*
+Testa se as propriedades de árvore são respeitadas por todas as entidades.
+*/
+assert verificaArvore {
+	-- A raíz deve ser um e apenas um diretório.
+	one dir: Diretorio | root[dir] and no pai[dir]
+	
+	-- Nenhuma Entidade tem ela mesma como pai.
+	all dir :Diretorio | not dir in dir.conteudo
+
+	-- Para todas as entirades, ou ela tem um pai ou é a raiz.
+	all ent: Entidade | #(ent.~conteudo) = 1 or root[ent]
+}
+
+check verificaArvore
+
 pred show[]{}
-run show for 12
+run show for 10
